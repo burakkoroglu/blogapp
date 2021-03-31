@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div style = "margin-top : 100px;" class="p-3 mb-2 bg-dark text-white">
+    <h1 class="display-4">BK BLOG</h1>
+    <p class="lead">Hoşgeldiniz!</p>
+    <hr class="my-4">
+    <p>Bloğumda makalalerinizi paylaşabilir ve aynı zamanda öğrenirken eğlenebilirsiniz.</p>
+    <p class="text-warning">
+        {% if request.user.is_authenticated %}
+            Giriş Yapılmış , {{request.user.username}}
+        {% else %}
+            Giriş Yapılmamış...
+        {% endif %}
+    </p>
+</div>
+
+{% endblock body %} 

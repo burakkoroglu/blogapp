@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1 class="row justify-content-md-center">Makaleler</h1>
+<hr>
+
+  <div class="col-md-2">
+    <!--  <form>
+      {% csrf_token %}
+      <input class="form-control" type="search" placeholder="Ara" aria-label="Search" name="keyword" >
+      <br>
+      <button class="btn btn-outline-warning" type="submit">Ara</button>
+      </form>
+    -->
+    <form>
+      {% csrf_token %}
+      <div class="row">
+          
+              <div class="form-group">
+                  <input type="text" class="form-control" size="40" name="keyword">
+                  <button type="submit" class="btn btn-fill btn-sm btn-primary">Ara</button>
+              </div>
+      </div>
+  </form>                         
+  </div>                                  
+    
+{% if articles %}
+
+{% for article in articles %}
+<div class="container">
+  
+   
+   
+    <div class="row justify-content-md-center">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+         <a href="{% url 'article:detail' article.id %}"><h1 class="mt-4">{{article.title}}</h1></a>
+
+        <!-- Author -->
+        <p class="lead">
+          
+          {{article.author.username}} Tarafından Yayınlandı.
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>{{article.created_date}} Tarihinde Yayınlandı</p>
+
+        
+
+        <!-- Preview Image -->
+        {% if article.article_image %}
+        <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="">
+        {% else %}
+        {% endif %}
+        
+
+        <hr>
+
+        <!-- Post Content -->
+        <p class="lead"> 
+            {{article.content|safe|truncatewords:30}}    
+        </p>
+        <br>
+        <a style="float: right;" href="{% url 'article:detail' article.id %}" class="btn btn-outline-warning">Devamını Oku </a>
+        <hr>
+
+        
+        </div>
+    </div>
+  
+</div>
+
+{% endfor %}
+
+{% else %}
+<div class="alert alert-danger">Makale Bulunmuyor...</div>
+{% endif %}
+
+{% endblock body %}

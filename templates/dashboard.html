@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-8">
+    <h1>Kontrol Paneli</h1>
+    <hr>
+    <p>
+        Hoşgeldiniz , <small>{{request.user.username}}</small> 
+
+    </p>
+    <hr>
+    <a class="btn btn-outline-warning btn-rounded" href="/articles/addarticle">Makale Ekle<a>
+    <hr>
+    
+    {% if articles %}
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"><strong>id</strong></th>
+            <th scope="col"><strong>Başlık</strong></th>
+            <th scope="col"><strong>Yazar</strong></th>
+            <th scope="col"><strong>Tarih</strong></th>
+            <th scope="col"><strong>Güncelle</strong></th>
+            <th scope="col"><strong>Sil</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <th scope="row">{{article.id}}</th>
+                <td><a href="/articles/article/{{article.id}}">{{article.title}}</a></td>
+                <td>{{article.author.username}}</td>
+                <td>{{article.created_date}}</td>
+                <td><a href="{% url 'article:update' article.id %}" class="btn btn-outline-warning btn-rounded">Güncelle</a></td>
+                <td><a href="{% url 'article:delete' article.id %}" class="btn btn-outline-warning btn-rounded">Sil</a></td>
+            </tr>  
+            {% endfor %}
+          
+        </tbody>
+      </table>
+    {% else %}
+    <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+        <div class="card-header">
+          Opps!
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Henüz Makaleniz Bulunmuyor</h5>
+          <p class="card-text">Hemen bir tane yazın..</p>
+        </div>
+    </div>
+    {% endif %}
+    </div>
+</div>
+{% endblock body %}
